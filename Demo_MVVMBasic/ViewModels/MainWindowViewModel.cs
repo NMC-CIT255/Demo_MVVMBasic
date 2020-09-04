@@ -67,7 +67,7 @@ namespace Demo_MVVMBasic
         public void AddWidget(object parameter)
         {
             //
-            // create widget to pass to add window
+            // create WidgetOperation object to pass
             // open add window
             //
             WidgetOperation widgetOperation = new WidgetOperation()
@@ -90,21 +90,25 @@ namespace Demo_MVVMBasic
         public void EditWidget(object parameter)
         {
             //
-            // create a copy of the selected Widget object to pass to add window
+            // create WidgetOperation object to pass with the current SelectedWidget object
             // open add window
             //
-            Widget editWidget = SelectedWidget;
-            Window editWidgetWindow = new EditWindow(editWidget);
+            WidgetOperation widgetOperation = new WidgetOperation()
+            {
+                Status = WidgetOperation.OperationStatus.CANCEL,
+                Widget = SelectedWidget
+            };
+            Window editWidgetWindow = new EditWindow(widgetOperation);
             editWidgetWindow.ShowDialog();
 
             //
             // TODO consider refactoring and use a class with the Widget object and status
             //
-            if (editWidget.Name != "CANCEL")
+            if (widgetOperation.Status != WidgetOperation.OperationStatus.CANCEL)
             {
                 Widgets.Remove(SelectedWidget);
-                Widgets.Add(editWidget);
-                SelectedWidget = editWidget;
+                Widgets.Add(widgetOperation.Widget);
+                SelectedWidget = widgetOperation.Widget;
             }
         }
 

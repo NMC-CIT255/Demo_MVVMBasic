@@ -20,10 +20,10 @@ namespace Demo_MVVMBasic.Views
     /// </summary>
     public partial class EditWindow : Window
     {
-        public EditWindow(Widget editWidget)
+        public EditWindow(WidgetOperation widgetOperation)
         {
             InitializeComponent();
-            EditWindowViewModel editWindowViewModel = new EditWindowViewModel(editWidget);
+            EditWindowViewModel editWindowViewModel = new EditWindowViewModel(widgetOperation);
             DataContext = editWindowViewModel;
         }
     }
