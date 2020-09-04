@@ -16,15 +16,15 @@ using System.Windows.Shapes;
 namespace Demo_MVVMBasic.Views
 {
     /// <summary>
-    /// Interaction logic for AddWindow.xaml
+    /// Interaction logic for EditWindow.xaml
     /// </summary>
-    public partial class AddWindow : Window
+    public partial class EditWindow : Window
     {
-        public AddWindow(WidgetOperation widgetOperation)
+        public EditWindow(Widget editWidget)
         {
             InitializeComponent();
-            AddWindowViewModel addWindowViewModel = new AddWindowViewModel(widgetOperation);
-            DataContext = addWindowViewModel;
+            EditWindowViewModel editWindowViewModel = new EditWindowViewModel(editWidget);
+            DataContext = editWindowViewModel;
         }
     }
 }

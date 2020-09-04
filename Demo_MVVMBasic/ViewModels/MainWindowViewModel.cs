@@ -10,6 +10,7 @@ using Demo_MVVMBasic.Data;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using Demo_MVVMBasic.Views;
+using System.Net.NetworkInformation;
 
 namespace Demo_MVVMBasic
 {
@@ -18,6 +19,7 @@ namespace Demo_MVVMBasic
         public ICommand ButtonSellCommand { get; set; }
         public ICommand ButtonBuyCommand { get; set; }
         public ICommand ButtonAddCommand { get; set; }
+        public ICommand ButtonEditCommand { get; set; }
         public ICommand ButtonDeleteCommand { get; set; }
         public ICommand ButtonQuitCommand { get; set; }
 
@@ -29,7 +31,7 @@ namespace Demo_MVVMBasic
         {
             get { return _selectedWidget; }
             set
-            { 
+            {
                 _selectedWidget = value;
                 OnPropertyChanged(nameof(SelectedWidget));
             }
@@ -38,13 +40,14 @@ namespace Demo_MVVMBasic
 
         public MainWindowViewModel()
         {
-            Widgets =  new ObservableCollection<Widget>(WidgetData.GetAllWidgets());
+            Widgets = new ObservableCollection<Widget>(WidgetData.GetAllWidgets());
 
             if (Widgets.Any()) SelectedWidget = Widgets[0];
 
             ButtonSellCommand = new RelayCommand(new Action<object>(SellWidgets));
             ButtonBuyCommand = new RelayCommand(new Action<object>(BuyWidgets));
             ButtonAddCommand = new RelayCommand(new Action<object>(AddWidget));
+            ButtonEditCommand = new RelayCommand(new Action<object>(EditWidget));
             ButtonDeleteCommand = new RelayCommand(new Action<object>(DeleteWidget));
             ButtonQuitCommand = new RelayCommand(new Action<object>(QuitWidget));
         }
@@ -67,16 +70,41 @@ namespace Demo_MVVMBasic
             // create widget to pass to add window
             // open add window
             //
-            Widget newWidget = new Widget();
-            Window addWdigetWindow = new AddWindow(newWidget);            
+            WidgetOperation widgetOperation = new WidgetOperation()
+            {
+                Status = WidgetOperation.OperationStatus.CANCEL,
+                Widget = new Widget()
+            };
+            Window addWdigetWindow = new AddWindow(widgetOperation);
             addWdigetWindow.ShowDialog();
 
             //
             // TODO consider refactoring and use a class with the Widget object and status
             //
-            if (newWidget.Name != "CANCEL")
+            if (widgetOperation.Status != WidgetOperation.OperationStatus.CANCEL)
             {
-                Widgets.Add(newWidget);
+                Widgets.Add(widgetOperation.Widget);
+            }
+        }
+
+        public void EditWidget(object parameter)
+        {
+            //
+            // create a copy of the selected Widget object to pass to add window
+            // open add window
+            //
+            Widget editWidget = SelectedWidget;
+            Window editWidgetWindow = new EditWindow(editWidget);
+            editWidgetWindow.ShowDialog();
+
+            //
+            // TODO consider refactoring and use a class with the Widget object and status
+            //
+            if (editWidget.Name != "CANCEL")
+            {
+                Widgets.Remove(SelectedWidget);
+                Widgets.Add(editWidget);
+                SelectedWidget = editWidget;
             }
         }
 

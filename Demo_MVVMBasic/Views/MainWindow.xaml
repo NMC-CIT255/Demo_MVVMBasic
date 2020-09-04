@@ -172,6 +172,11 @@
                                 Command="{Binding ButtonAddCommand}" 
                                 CommandParameter="{Binding Text, ElementName=Quantity}" />
                             <Button 
+                                Content="Edit" 
+                                Style="{StaticResource ButtonStyleSmall}"
+                                Command="{Binding ButtonEditCommand}" 
+                                CommandParameter="{Binding Text, ElementName=Quantity}" />
+                            <Button 
                                 Content="Delete" 
                                 Style="{StaticResource ButtonStyleSmall}"
                                 Command="{Binding ButtonDeleteCommand}" 

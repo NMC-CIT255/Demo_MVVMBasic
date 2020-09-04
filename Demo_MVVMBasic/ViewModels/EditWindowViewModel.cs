@@ -13,28 +13,30 @@ using Demo_MVVMBasic.Views;
 
 namespace Demo_MVVMBasic
 {
-    class AddWindowViewModel
+    class EditWindowViewModel
     {
         public ICommand ButtonSaveCommand { get; set; }
         public ICommand ButtonCancelCommand { get; set; }
 
         public Widget UserWidget { get; set; }
 
-        private WidgetOperation _widgetOperation;
-
-        public AddWindowViewModel(WidgetOperation widgetOperation)
+        public EditWindowViewModel()
         {
-            UserWidget = widgetOperation.Widget;
-            _widgetOperation = widgetOperation;
 
-            ButtonSaveCommand = new RelayCommand(new Action<object>(AddWidget));
-            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddWidget));
         }
 
-        public void AddWidget(object parameter)
+        public EditWindowViewModel(Widget newWidget)
+        {
+            UserWidget = newWidget;
+
+            ButtonSaveCommand = new RelayCommand(new Action<object>(EditWidget));
+            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelEditWidget));
+        }
+
+        public void EditWidget(object parameter)
         {
             // validate user inputs
-            _widgetOperation.Status = WidgetOperation.OperationStatus.OKAY;
+
 
             if (parameter is System.Windows.Window)
             {
@@ -42,9 +44,9 @@ namespace Demo_MVVMBasic
             }
         }
 
-        public void CancelAddWidget(object parameter)
+        public void CancelEditWidget(object parameter)
         {
-            _widgetOperation.Status = WidgetOperation.OperationStatus.CANCEL;
+            UserWidget.Name = "CANCEL";
 
             if (parameter is System.Windows.Window)
             {
