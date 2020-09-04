@@ -3,8 +3,65 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Demo_MVVMBasic"
         Title="Demo MVVM Basic" 
-        Height="300" 
+        Height="400" 
         Width="370">
+    <Window.Resources>
+        <Style x:Key="HeaderStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="SubHeaderStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style x:Key="DetailLabelStyle" TargetType="Label">
+            <Setter Property="Width" Value="75"></Setter>
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+         <Style x:Key="DetailTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="DetailStackPanelStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+        <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="MasterLabelTextStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="DarkGoldenrod"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="ButtonStyleLarge" TargetType="Button">
+            <Setter Property="Background" Value="DarkGoldenrod"/>
+            <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ButtonStyleSmall" TargetType="Button">
+            <Setter Property="Background" Value="DarkGoldenrod"/>
+            <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <!--
     setting the DataContext instantiates the view model and
     provides intellisense help in the view
@@ -13,11 +70,16 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Grid>
+    <Grid
+        HorizontalAlignment="Center">
         <StackPanel
             Orientation="Vertical"
             Margin="20"
             >
+            <Label
+                Content="Acme Widgets"
+                HorizontalAlignment="Center"
+                Style="{StaticResource HeaderStyle }"/>
             <ComboBox
                 HorizontalAlignment="Left"
                 Margin="10"
@@ -26,21 +88,59 @@
                 SelectedItem="{Binding Path=SelectedWidget}"
                 DisplayMemberPath="Name"
                 />
-            <Label
-                Content="{Binding SelectedWidget.Name}"/>
-            <Label
-                Content="{Binding SelectedWidget.Color}"/>
-            <Label
-                Content="{Binding SelectedWidget.UnitPrice}"/>
-            <Label
-                Content="{Binding SelectedWidget.CurrentInventory}"/>
+
+            <StackPanel
+                Style="{StaticResource DetailStackPanelStyle}">
+                <Label
+                    Content="Name"
+                    Style="{StaticResource DetailLabelStyle}"
+                />
+                <TextBox
+                    Text="{Binding SelectedWidget.Name}"
+                    Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel
+                Style="{StaticResource DetailStackPanelStyle}">
+                <Label
+                    Content="Color"
+                    Style="{StaticResource DetailLabelStyle}"
+                />
+                <TextBox
+                    Text="{Binding SelectedWidget.Color}"
+                    Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel
+                Style="{StaticResource DetailStackPanelStyle}">
+                <Label
+                    Content="Price"
+                    Style="{StaticResource DetailLabelStyle}"
+                />
+                <TextBox
+                    Text="{Binding SelectedWidget.UnitPrice}"
+                    Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel
+                Style="{StaticResource DetailStackPanelStyle}">
+                <Label
+                    Content="Inventory"
+                    Style="{StaticResource DetailLabelStyle}"
+                />
+                <TextBox
+                    Text="{Binding SelectedWidget.CurrentInventory}"
+                    Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+
             <StackPanel
                 Orientation="Horizontal">
-                <TextBlock x:Name="Quantity"                    
+                <Label
+                    VerticalAlignment="Center"
+                    Content="Quantity"
+                    FontWeight="Bold"
+                    Margin="10"/>
+                <TextBox x:Name="Quantity"                    
                     Text="55"                    
                     Height="25"
-                    Width="25"
-                    />
+                    Width="25"/>
                 <Button 
                     Content="Sell" 
                     Height="25" 
