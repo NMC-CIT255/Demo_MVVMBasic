@@ -71,7 +71,10 @@ namespace Demo_MVVMBasic
             Window addWdigetWindow = new AddWindow(newWidget);            
             addWdigetWindow.ShowDialog();
 
-            if (newWidget != null)
+            //
+            // TODO consider refactoring and use a class with the Widget object and status
+            //
+            if (newWidget.Name != "CANCEL")
             {
                 Widgets.Add(newWidget);
             }

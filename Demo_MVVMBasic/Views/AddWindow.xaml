@@ -43,7 +43,7 @@
             <Setter Property="Foreground" Value="DarkGoldenrod"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style x:Key="DetailStackPanelStyle" TargetType="StackPanel">
             <Setter Property="Margin" Value="10,0,0,0"/>
@@ -81,15 +81,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-
-    <!--
-    setting the DataContext instantiates the view model and
-    provides intellisense help in the view
-    -->
-    <!--<Window.DataContext>
-        <local:AddWindowViewModel/>
-    </Window.DataContext>-->
-
+       
     <Grid
         HorizontalAlignment="Center">
         <StackPanel
@@ -120,7 +112,7 @@
                                     Style="{StaticResource DetailLabelStyle}"
                                 />
                                 <TextBox
-                                    Text="{Binding NewWidget.Name}"
+                                    Text="{Binding UserWidget.Name}"
                                     Style="{StaticResource DetailTextBoxStyle}"/>
                             </StackPanel>
                             <StackPanel
@@ -130,7 +122,7 @@
                                     Style="{StaticResource DetailLabelStyle}"
                                 />
                                 <TextBox
-                                    Text="{Binding NewWidget.Color}"
+                                    Text="{Binding UserWidget.Color}"
                                     Style="{StaticResource DetailTextBoxStyle}"/>
                             </StackPanel>
                             <StackPanel
@@ -140,7 +132,7 @@
                                     Style="{StaticResource DetailLabelStyle}"
                                 />
                                 <TextBox
-                                    Text="{Binding NewWidget.UnitPrice, StringFormat={}{0:C}}"
+                                    Text="{Binding UserWidget.UnitPrice}"
                                     Style="{StaticResource DetailTextBoxStyle}"/>
                             </StackPanel>
                             <StackPanel
@@ -150,7 +142,7 @@
                                     Style="{StaticResource DetailLabelStyle}"
                                 />
                                 <TextBox
-                                    Text="{Binding NewWidget.CurrentInventory}"
+                                    Text="{Binding UserWidget.CurrentInventory}"
                                     Style="{StaticResource DetailTextBoxStyle}"/>
                             </StackPanel>
                         </StackPanel>
@@ -161,12 +153,12 @@
                 <Button 
                     Content="Save" 
                     Style="{StaticResource ButtonStyleSmall}"
-                    Command="{Binding ButtonCancelCommand}"
+                    Command="{Binding ButtonSaveCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
                 <Button 
                     Content="Cancel" 
                     Style="{StaticResource ButtonStyleSmall}"
-                    Command="{Binding ButtonSaveCommand}"
+                    Command="{Binding ButtonCancelCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
             </StackPanel>
 
