@@ -9,6 +9,7 @@ using Demo_MVVMBasic.Models;
 using Demo_MVVMBasic.Data;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using Demo_MVVMBasic.Views;
 
 namespace Demo_MVVMBasic
 {
@@ -18,6 +19,7 @@ namespace Demo_MVVMBasic
         public ICommand ButtonBuyCommand { get; set; }
         public ICommand ButtonAddCommand { get; set; }
         public ICommand ButtonDeleteCommand { get; set; }
+        public ICommand ButtonQuitCommand { get; set; }
 
         private Widget _selectedWidget;
 
@@ -44,6 +46,7 @@ namespace Demo_MVVMBasic
             ButtonBuyCommand = new RelayCommand(new Action<object>(BuyWidgets));
             ButtonAddCommand = new RelayCommand(new Action<object>(AddWidget));
             ButtonDeleteCommand = new RelayCommand(new Action<object>(DeleteWidget));
+            ButtonQuitCommand = new RelayCommand(new Action<object>(QuitWidget));
         }
 
         public void SellWidgets(object parameter)
@@ -60,7 +63,18 @@ namespace Demo_MVVMBasic
 
         public void AddWidget(object parameter)
         {
+            //
+            // create widget to pass to add window
+            // open add window
+            //
+            Widget newWidget = new Widget();
+            Window addWdigetWindow = new AddWindow(newWidget);            
+            addWdigetWindow.ShowDialog();
 
+            if (newWidget != null)
+            {
+                Widgets.Add(newWidget);
+            }
         }
 
         public void DeleteWidget(object parameter)
@@ -85,6 +99,11 @@ namespace Demo_MVVMBasic
                         break;
                 }
             }
+        }
+
+        public void QuitWidget(object parameter)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
